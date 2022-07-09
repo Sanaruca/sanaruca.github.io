@@ -1,0 +1,82 @@
+body {
+  & > section,
+  header,
+  footer {
+    padding: 8rem 10rem;
+    @media screen and (max-width:768px){
+      padding: 8rem;
+    }
+    @media screen and (max-width:480px){
+      padding: 8rem 3rem;
+    }
+  }
+  & > header {
+    padding-top: 5rem;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    
+    @media screen and (max-width:480px){
+      min-height: min-content;
+    }
+  }
+}
+
+section,
+.title-content {
+  &#path,
+  &#about {
+    min-width: 30rem;
+    max-width: 40rem;
+  }
+
+  span {
+    display: inline-block;
+    font-size: 1.1em;
+    color: var(--primary-color);
+  }
+  h1,
+  h2,
+  h3 {
+    margin-top: 0.5em;
+  }
+  p {
+    margin-top: 2em;
+  }
+
+  &.flex-content {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 6rem;
+
+    *{
+      flex: 1;
+    }
+
+    &:first-of-type {
+      justify-content: space-between;
+    }
+  }
+
+  .grid-content{
+    margin-top: 2rem;
+  }
+
+
+
+  
+
+  .prorfolio-content {
+    // background-color: red;
+    .img {
+      // background-color: #00fca04e;
+      height: 20rem;
+    }
+
+    .tags-content {
+      margin-top: 1rem;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+  }
+}

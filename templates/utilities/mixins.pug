@@ -1,0 +1,16 @@
+mixin projet-item(name, ...tags)
+  .poject-content
+    .img.target
+    h3 #{name}
+    .tags-content.flex-content
+      each tag in tags
+        span.tag ##{tag}
+
+mixin timeline-item(position, formYear, toYear, description, company='Freelance')
+  .path-timeline-item
+    .path-timeline-header
+      span #{company}
+      span #{formYear}-#{toYear}
+    .path-timeline-info
+      h4 #{position}
+      p #{description}
