@@ -1,6 +1,8 @@
-mixin projet-item(name, ...tags)
+mixin projet-item(name, imageName, ...tags)
   .poject-content
-    .img.target
+    .target
+      .img-content
+        img(src="./public/images/screenshots/"+imageName, alt="image")
     h3 #{name}
     .tags-content.flex-content
       each tag in tags

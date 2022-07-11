@@ -7,7 +7,7 @@
     "build": "concurrently \"npm:build:pug\" \"npm:build:sass\" \"npm:copy:images\"",
     "build:pug": "pug -O .\\options.js -o .\\build templates/index.pug",
     "build:sass": "sass --style compressed --no-source-map .\\scss\\index.scss .\\build\\public\\stylesheets\\styles.css",
-    "copy:images": "copyfiles -u 1 -V .\\assets\\images\\* .\\build\\public",
+    "copy:images": "copyfiles -u 1 -V .\\assets\\images\\**\\* .\\build\\public",
     "dev": "watch \"npm run build\" -d --ignoreDirectoryPattern=\"/(build|node_modules)/\"",
     "deploy": "npm run build && git switch master && copyfiles -u 1 .\\build\\**\\* .\\ && git add * && git commit && git push --all origin",
     "test": "echo \"Error: no test specified\" && exit 1"

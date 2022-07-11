@@ -1,0 +1,23 @@
+#portfolio {
+  .prorfolio-content {
+    // background-color: red;
+
+    .target {
+      padding: 1rem;
+      .img-content {
+        // background-color: #00fca04e;
+
+        img {
+          width: 100%;
+          background-color: red;
+        }
+      }
+    }
+
+    .tags-content {
+      margin-top: 1rem;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+  }
+}
