@@ -4,17 +4,20 @@
   "description": "",
   "main": "build/index.html",
   "scripts": {
+    "build": "concurrently \"npm:build:pug\" \"npm:build:sass\" \"npm:copy:images\"",
     "build:pug": "pug -O .\\options.js -o .\\build templates/index.pug",
-    "build:sass": "sass --style compressed --no-source-map .\\scss\\index.scss .\\build\\stylesheets\\styles.css",
-    "build": "npm run build:pug && npm run build:sass",
+    "build:sass": "sass --style compressed --no-source-map .\\scss\\index.scss .\\build\\public\\stylesheets\\styles.css",
+    "copy:images": "copyfiles -u 1 -V .\\assets\\images\\* .\\build\\public",
     "dev": "watch \"npm run build\" -d --ignoreDirectoryPattern=\"/(build|node_modules)/\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sanaruca",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^7.2.2",
+    "copyfiles": "^2.4.1",
     "pug": "^3.0.2",
     "sass": "^1.53.0",
-    "watch": "^1.0.2"
+    "watch": "^0.13.0"
   }
 }
