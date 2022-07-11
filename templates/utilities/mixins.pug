@@ -2,7 +2,7 @@ mixin projet-item(name, imageName, ...tags)
   .poject-content
     .target
       .img-content
-        img(src="./public/images/screenshots/"+imageName, alt="image")
+        img( loading="lazy", src="./public/images/screenshots/"+imageName, alt="image")
     h3 #{name}
     .tags-content.flex-content
       each tag in tags
