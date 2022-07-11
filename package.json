@@ -9,6 +9,7 @@
     "build:sass": "sass --style compressed --no-source-map .\\scss\\index.scss .\\build\\public\\stylesheets\\styles.css",
     "copy:images": "copyfiles -u 1 -V .\\assets\\images\\* .\\build\\public",
     "dev": "watch \"npm run build\" -d --ignoreDirectoryPattern=\"/(build|node_modules)/\"",
+    "switch:master": "git switch master",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sanaruca",
