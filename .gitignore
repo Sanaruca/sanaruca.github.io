@@ -3,6 +3,7 @@ node_modules/
 assets/svg/
 scss/
 templates/
+build/
 
 package.json
 package-lock.json
