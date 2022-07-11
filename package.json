@@ -10,7 +10,7 @@
     "copy:images": "copyfiles -u 1 -V .\\assets\\images\\* .\\build\\public",
     "dev": "watch \"npm run build\" -d --ignoreDirectoryPattern=\"/(build|node_modules)/\"",
     "test:copy": "copyfiles -u 1 .\\build\\**\\* .\\ ",
-    "test:all": "npm run build && git switch master && npm run test:copy ",
+    "test:all": "npm run build && git switch master && copyfiles -u 1 .\\build\\**\\* .\\",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sanaruca",
