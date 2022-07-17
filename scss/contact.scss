@@ -17,11 +17,11 @@ section#contact {
 
       form .form-control {
         margin-top: 2rem;
-        &:first-of-type{
-          margin: 0;
-        }
+        // &:first-of-type{
+        //   margin: 0;
+        // }
 
-        input[type='text'],
+        input[type='text'], input[type='email'],
         textarea {
           color: var(--tex-color);
           border: none;

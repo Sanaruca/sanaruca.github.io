@@ -6,10 +6,15 @@ section#contact.black-target.flex-content
       br
       | Let's build something extraordinary!
   section.form-content.target
-    form(action="javascript:void(0);") 
+    form(name='sendMessage',action="javascript:void(0);") 
+      .flex-content
+        .form-control
+          input#firstName(type="text", name="firstName" placeholder="first name" required)
+        .form-control
+          input#lastName(type="text", name="lastName" placeholder="last name" required)
       .form-control
-        input#subjet(type="text" placeholder="email")
+        input#email(type="email", name="email" placeholder="email" required)
       .form-control
-        textarea#message(name="" cols="30" rows="10" placeholder="message")
+        textarea#message(name="message" cols="30" rows="10" placeholder="message" required)
       .form-control
-        input(type="submit" value="submit").btn 
+        input(type="submit", name="submit", value="submit").btn 
