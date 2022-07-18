@@ -50,6 +50,7 @@ section#info {
     justify-content: center;
     flex-wrap: wrap;
     gap: 3rem;
+    min-width: 24rem;
 
     .skill-item {
       display: inline-flex;
