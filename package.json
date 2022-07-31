@@ -5,7 +5,7 @@
   "main": "build/index.html",
   "scripts": {
     "build": "concurrently \"npm:build:pug\" \"npm:build:ts\" \"npm:build:sass\" \"npm:copy:images\"",
-    "build:pug": "pug -O .\\options.js -o .\\build templates/index.pug",
+    "build:pug": "ts-node .\\render.ts",
     "build:ts": "tsc --module amd ts/main.ts --outDir ./build/public/javascript",
     "build:sass": "sass --style compressed --no-source-map .\\scss\\index.scss .\\build\\public\\stylesheets\\styles.css",
     "copy:images": "copyfiles -u 1 -V .\\assets\\images\\**\\* .\\build\\public",

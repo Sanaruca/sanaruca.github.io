@@ -7,5 +7,12 @@ export const appRoutes: Route[] = [
             filePath: './templates/index.pug',
             locals: {title: 'sanaruca'}
         }
-    }
+    },
+    {
+        path: '/shoppingapp',
+        template: {
+            filePath: './templates/project.pug',
+            locals: {title: 'sanaruca'}
+        }
+    },
 ]
