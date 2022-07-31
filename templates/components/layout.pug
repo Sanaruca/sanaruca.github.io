@@ -9,4 +9,6 @@ html(lang="en")
     script(data-main="./public/javascript/main", type="text/javascript", src="https://requirejs.org/docs/release/2.3.6/minified/require.js" defer)
     title #{title}
     block styles
-block content
+  body
+    include ./navbar.pug
+    block content

@@ -10,16 +10,7 @@ body {
       padding: 8rem 3rem;
     }
   }
-  & > header {
-    padding-top: 5rem;
-    min-height: 100vh;
-    flex-direction: column;
-    justify-content: center;
-    
-    @media screen and (max-width:480px){
-      min-height: min-content;
-    }
-  }
+  
 }
 
 section,

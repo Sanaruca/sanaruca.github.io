@@ -4,7 +4,18 @@ header {
   background-position: calc(100% + 12rem) calc(100% + 5rem);
   overflow: hidden;
 
-  & > svg{
+
+  padding-top: 5rem;
+  min-height: calc(100vh - 4rem);
+  flex-direction: column;
+  justify-content: center;
+
+  @media screen and (max-width:480px) {
+    min-height: min-content;
+  }
+
+
+  &>svg {
     position: absolute;
     right: -14rem;
     bottom: -14rem;
@@ -23,13 +34,13 @@ header {
     font-weight: 900;
   }
 
-  .additional-content{
+  .additional-content {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 5rem;
 
-    .btn-content{
+    .btn-content {
       width: 60%;
       min-width: min-content;
       justify-content: center;
@@ -42,14 +53,17 @@ header {
   margin: 10rem 0 2rem 0;
   grid-template-columns: 1fr 60%;
   transition: all 1s;
+
   @media screen and (max-width: 768px) {
     display: block;
   }
+
   @media screen and (max-width: 960px) {
     grid-template-columns: 1fr 1fr;
   }
 
   .logo-content {
+
     // background-color: red;
     svg {
       // filter: invert(1);
@@ -79,9 +93,17 @@ header {
       animation: rotation 20s infinite linear;
 
       @keyframes rotation {
-        0%, 40% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
-        0%, 100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
-    }
+
+        0%,
+        40% {
+          transform: translateX(-50%) translateY(-50%) rotate(0deg);
+        }
+
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(-50%) rotate(360deg);
+        }
+      }
 
     }
   }
