@@ -1,0 +1,30 @@
+.main-project {
+  // background-color: #2570a183;  
+  
+  .img-slider {
+    align-items: flex-end;
+    padding: 0 2rem;
+
+    .img {
+      background-color: #2570a183;
+      height: 34rem;
+      width: 56rem;
+      z-index: 200;
+
+      &:first-of-type,
+      &:last-of-type {
+        background-color: rgba(0, 255, 106, 0.541);
+        height: calc(34rem - 20%);
+        width: calc(56rem - 20%);
+        position: absolute;
+        z-index: 100;
+        bottom: 2rem;
+        right: 0;
+      }
+      
+      &:last-of-type{
+        left: 0;
+      }
+    }
+  }
+}

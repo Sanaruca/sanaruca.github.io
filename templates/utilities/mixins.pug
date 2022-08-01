@@ -3,7 +3,7 @@ mixin projet-item(name, imageName, ...tags)
     .target
       .img-content
         img( loading="lazy", src="./public/images/screenshots/"+imageName, alt="image")
-    h3 #{name}
+    a(href="/"+name): h3 #{name}
     .tags-content.flex-content
       each tag in tags
         span.tag ##{tag}
