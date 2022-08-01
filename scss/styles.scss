@@ -59,6 +59,16 @@ h6 {
   font-weight: 400;
 }
 
+a{
+  color: var(--text-color);
+  text-decoration: none;
+
+  &::after{
+    content: '↗';
+    display: block;
+  }
+}
+
 .flex-content {
   display: flex;
   gap: 1rem;

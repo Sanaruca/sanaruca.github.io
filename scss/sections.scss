@@ -36,7 +36,7 @@ section,
   }
 
   &.flex-content {
-    justify-content: flex-start;
+    // justify-content: flex-start;
     flex-wrap: wrap;
     gap: 6rem;
 
@@ -45,7 +45,7 @@ section,
     }
 
     &:first-of-type {
-      justify-content: space-between;
+      // justify-content: space-between;
     }
   }
 
