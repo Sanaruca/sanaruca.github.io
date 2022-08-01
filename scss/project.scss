@@ -31,6 +31,7 @@
       &:not(:first-of-type) {
         background-color: rgba(0, 255, 106, 0.541);
         z-index: 100;
+        bottom: 2rem;
       }
 
       &:last-of-type {
@@ -45,7 +46,7 @@
         z-index: 200;
         left: 50%;
         transform: translateX(-50%);
-
+        bottom: 0;
       }
 
       img{
@@ -107,10 +108,19 @@
     flex-wrap: wrap;
   }
 
-
+  
+  
   li {
     max-width: max-content;
     min-width: max-content;
   }
+  
+}
 
+.repo-content{
+  justify-content: flex-end;
+
+  a{
+    max-width: max-content;
+  }
 }

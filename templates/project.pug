@@ -19,3 +19,5 @@ block content
       ul.tag-content.flex-content
         each skill of project.usedSkills
           li: span.tag ##{skill}
+  section.repo-content.flex-content
+    a(href= project.githubRepo, target="_blank") go to repository #[i(class="fa fa-github", aria-hidden="true")]

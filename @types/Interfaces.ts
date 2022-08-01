@@ -11,4 +11,5 @@ export interface Project {
     description: string,
     usedSkills: string[],
     imageUrl: [string, string?, string?]
+    githubRepo: string
 }
