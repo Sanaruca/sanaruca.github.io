@@ -1,15 +1,24 @@
 $primary-color: #ff5722;
+
+// darck colors
 $bg-color-1: #111111;
 $bg-color-2: #151515;
 $bg-color-3: #1a1a1a;
 $text-color: #E6E8E6;
 
+
+// light colors
+$bg-color-1-l: #ffffff;
+$bg-color-2-l: #f7f7f7;
+$bg-color-3-l: change-color($color: $primary-color, $alpha: 0.08);
+$text-color-l: #101010;
+
 :root {
   --primary-color: #{$primary-color};
-  --bg-color-1: #{$bg-color-1};
-  --bg-color-2: #{$bg-color-2};
-  --bg-color-3: #{$bg-color-3};
-  --text-color: #{$text-color};
+  --bg-color-1: #{$bg-color-1-l};
+  --bg-color-2: #{$bg-color-2-l};
+  --bg-color-3: #{$bg-color-3-l};
+  --text-color: #{$text-color-l};
 }
 
 * {
