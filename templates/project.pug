@@ -12,7 +12,7 @@ block content
         li: a(href="#image3") 3
     section
       h1 #{project.name}
-      p #{project.description}
+      p !{project.description.replace(/\n/g, '<br/>')}
       ul.tag-content.flex-content
         each skill of project.usedSkills
           li: span.tag ##{skill}
