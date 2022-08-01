@@ -3,9 +3,14 @@ extends ./components/layout.pug
 block content
   section.main-project.flex-content.black-target
     section.img-slider.flex-content
-        .img
-        .img
-        .img
+      .img#image1
+      .img#image3
+      .img#image2
+      ul.img-selection-content.flex-content
+        li: a(href="#image1") 1
+        li: a(href="#image2") 2
+        li: a(href="#image3") 3
     section
       h1 #{project.name}
       p #{project.description}
+      
