@@ -13,4 +13,6 @@ block content
     section
       h1 #{project.name}
       p #{project.description}
-      
+      ul.tag-content.flex-content
+        each skill of project.usedSkills
+          li: span.tag ##{skill}
