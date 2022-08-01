@@ -1,5 +1,9 @@
 extends ./components/layout.pug
 
+block scripts
+  script(data-main="/public/javascript/main", type="text/javascript", src="https://requirejs.org/docs/release/2.3.6/minified/require.js" defer)
+
+
 block content
   include ./components/header.pug
   include ./components/about.pug
