@@ -63,7 +63,7 @@ a{
   color: var(--text-color);
   text-decoration: none;
 
-  &::after{
+  &:not(.btn):after{
     content: '↗';
     display: block;
   }
