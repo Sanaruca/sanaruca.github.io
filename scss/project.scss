@@ -8,7 +8,7 @@
     min-width: 60rem;
     min-height: 34rem;
 
-    .img {
+    .img-content {
       background-color: #2570a183;
       height: calc(34rem - 20%);
       width: calc(56rem - 20%);
@@ -17,6 +17,9 @@
       transition: cubic-bezier(0.15, 0.96, 1, 1) .4s;
       position: absolute;
       right: 0;
+      box-shadow: #00000070 0rem 0rem 2rem 0rem;
+      border-radius: 1rem;
+      overflow: hidden;
 
       &:first-of-type {
         height: 34rem;
@@ -43,6 +46,12 @@
         left: 50%;
         transform: translateX(-50%);
 
+      }
+
+      img{
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
       }
 
       @media screen and (max-width: 600px) {

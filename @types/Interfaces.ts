@@ -10,4 +10,5 @@ export interface Project {
     name: string,
     description: string,
     usedSkills: string[],
+    imageUrl: [string, string?, string?]
 }
