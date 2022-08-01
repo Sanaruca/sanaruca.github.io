@@ -63,9 +63,17 @@ a{
   color: var(--text-color);
   text-decoration: none;
 
+  *{
+    display: inline-block;
+  }
+
   &:not(.btn):after{
-    content: '↗';
-    display: block;
+    content: "↗";
+    font-size: .65em;
+    position: absolute;
+    top: 0;
+    right: -0.5em;
+    color: var(--primary-color);
   }
 }
 
