@@ -5,7 +5,7 @@ export const projects: Project[] = [
   {
     name: 'shoppingapp',
     description: "Shoppingapp is a face-to-face development android app written with React Native. Its function is to help keep track of the purchases that are made regularly in the supermarket in order to save on purchase costs by writing down each product that is being deposited in the shopping cart. In other words, while the user is in the supermarket, he can write down the prices of the products he is going to take.",
-    usedSkills: ['react-native', 'explo', 'typescript', 'mobile'],
+    usedSkills: ['react-native', 'expo', 'typescript', 'mobile'],
     imageUrl: ['/public/images/screenshots/shoppingapp.png', 'https://internetmedica.com/wp-content/uploads/2022/01/placeholder-5.png', 'https://internetmedica.com/wp-content/uploads/2022/01/placeholder-5.png'],
     githubRepo: '#'
   },
