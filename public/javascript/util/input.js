@@ -1,13 +1,13 @@
 define(["require", "exports", "../constants/document"], function (require, exports, document_1) {
     "use strict";
-    exports.__esModule = true;
+    Object.defineProperty(exports, "__esModule", { value: true });
     exports.clearInput = exports.getInput = void 0;
-    var formElements = document_1.form.elements, messageElement = formElements.namedItem('message'), emailElement = formElements.namedItem('email'), firstNameElement = formElements.namedItem('firstName'), lastNameElement = formElements.namedItem('lastName');
+    const formElements = document_1.form.elements, messageElement = formElements.namedItem('message'), emailElement = formElements.namedItem('email'), firstNameElement = formElements.namedItem('firstName'), lastNameElement = formElements.namedItem('lastName');
     function getInput() {
         return {
             message: messageElement.value.trim(),
             email: emailElement.value.trim(),
-            fullname: "".concat(firstNameElement.value.trim(), " ").concat(lastNameElement.value.trim())
+            fullname: `${firstNameElement.value.trim()} ${lastNameElement.value.trim()}`,
         };
     }
     exports.getInput = getInput;
