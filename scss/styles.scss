@@ -1,10 +1,10 @@
-$primary-color: #ff5722;
+$primary-color: #CCFF66;
 
 // darck colors
-$bg-color-1: #111111;
-$bg-color-2: #151515;
-$bg-color-3: #1a1a1a;
-$text-color: #E6E8E6;
+$bg-color-1: #314249;
+$bg-color-2: #33454D;
+$bg-color-3: #394D56;
+$text-color: #C3DFE0;
 
 
 // light colors
@@ -15,10 +15,10 @@ $text-color-l: #101010;
 
 :root {
   --primary-color: #{$primary-color};
-  --bg-color-1: #{$bg-color-1-l};
-  --bg-color-2: #{$bg-color-2-l};
-  --bg-color-3: #{$bg-color-3-l};
-  --text-color: #{$text-color-l};
+  --bg-color-1: #{$bg-color-1};
+  --bg-color-2: #{$bg-color-2};
+  --bg-color-3: #{$bg-color-3};
+  --text-color: #{$text-color};
 }
 
 * {
