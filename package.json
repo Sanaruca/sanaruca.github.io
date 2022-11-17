@@ -8,9 +8,9 @@
     "trash:build": "trash .\\build",
     "build:pug": "ts-node .\\render.ts --no-project",
     "build:ts": "tsc -P compileOptions.json",
-    "build:sass": "sass --style compressed --no-source-map .\\scss\\index.scss .\\build\\public\\stylesheets\\styles.css",
+    "build:sass": "sass --style compressed --no-source-map .\\src\\scss\\index.scss .\\build\\public\\stylesheets\\styles.css",
     "copy:images": "copyfiles -u 1 -V .\\assets\\images\\**\\* .\\build\\public",
-    "dev": "watch \"npm run build\" -d --ignoreDirectoryPattern=\"/(build|node_modules)/\"",
+    "dev": "watch \"npm run build\" .\\src -d --ignoreDirectoryPattern=\"/(build|node_modules)/\"",
     "deploy": "npm run trash:build && npm run build && git switch master && copyfiles -u 1 .\\build\\**\\* .\\ && git add * && git commit && git push --all origin",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

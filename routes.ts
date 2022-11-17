@@ -1,11 +1,11 @@
 import { Project, Route } from "./@types";
-import { projects } from "./constants/projects";
+import { projects } from "./src/constants/projects";
 
 export const appRoutes: Route[] = [
     {
         path: '/',
         template: {
-            filePath: './templates/index.pug',
+            filePath: './src/templates/index.pug',
             locals: { title: 'sanaruca' }
         }
     },
@@ -14,7 +14,7 @@ export const appRoutes: Route[] = [
 .concat(projects.map((project) => ({
     path: `/${project.name}`,
     template: {
-        filePath: './templates/project.pug',
+        filePath: './src/templates/project.pug',
         locals: {
             title: `sanaruca | ${project.name}`,
             project
