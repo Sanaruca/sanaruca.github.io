@@ -1,0 +1,228 @@
+---
+title: How I added Svelte to my website
+---
+
+# {title}
+
+
+> **Note:** This article is expected to be updated in the near future, so it may be incomplete.
+
+
+During the last few months I have been exploring JavaScript technologies like [nx](https://nx.dev/), [vite.js](https://vitejs.dev/), [storybook](https://storybook.js.org/), etc. In this time I have discovered a lot of things but in this article I will be talking about how I changed the implementation of my website, how I went from having a website developed with technologies like [pug/jade](https://pugjs.org/api/getting-started.html#overview) to a more scalable website with [Svelte](https://kit.svelte.dev/docs/introduction).
+
+### Context
+
+When I decided to create my website I clearly didn't know where to start, although I knew how to develop it, I didn't want to add a framework like [Angular](https://angular.io/guide/what-is-angular) as it would be like driving a truck to the supermarket so I chose to make a static website with HTML and CSS and just a bit of Javascipt to make the contact form instead of using the **mailto** link because if you access this link from a computer (or at least it happened to me) it tended to not work because of mail applications etc.
+	
+The thing is that in addition to this decision, I wanted to be able to reuse components of the page without having to copy and paste after all. This reason made me choose to use pug/jade instead of pure HTML. 
+	
+Pug/jade seems great as a template engine although I didn't really need more than static applications with **Server Side Rendering**, the syntax with idents and not having to write a tag twice (opening and closing) gave me the advantage of not having a very long code and easy to read.
+	
+My idea was to develop the website as soon as possible so I used [Prepros](https://prepros.io/) to convert the ".pug" and ".scss" files to HTML and CSS respectively. This brought me two problems, although the processing was fast I didn't have the flexibility to export the outputs to specific folders in an order that made sense to me depending on how I structured the project at the folder level, so I had to manually move the files and I didn't like having the notification to buy prepros every 10 minutes.
+
+For these reasons I decided to create my own environment as a **mini framework** (I later realised that this was not efficient).
+	
+Once I finished all the development of the site it wasn't until I had to add and fix a few things that I realised that the development process I had put in place was inefficient as I used a script to watch for changes to each file, concurrently processed each of those files for output and copied some files I added as long as they weren't already there. This could take about 3 seconds, which is a lot and ruined the development experience.
+	
+	
+### Process
+
+Before we start with this, I think it's useful to give a short description of what Svelte is and what advantages it brings:
+	
+Svelte is described on its homepage as **_"a radically new approach to creating user interfaces "_**. It is a JavaScript framework that differs from other frameworks in the way it works with the DOM. Unlike other frameworks that make updates to the DOM every time there is a change, Svelte compiles the code at compile time and produces JavaScript code that manipulates the DOM directly, which means that the load and speed of the application benefits.
+	
+**The advantages of Svelte include**:
+
+1. Improves the speed of the application.
+2. Simpler, clearer and easier to read code.
+3. Faster page loading.
+4. May be easier to learn compared to other frameworks.
+5. Makes it easier to create applications with fewer dependencies.
+6. Better performance compared to other frameworks such as React or Angular.
+
+Overall, Svelte is a useful tool if you want to create fast and efficient web applications.
+
+Once you understand why Svelte, start by going to the official Svelte website and following the guide. Simply to avoid having to copy files, run the command to generate a Svelte project so that it will be in the same folder as the page code.
+	
+**Original Project Structure**
+
+```
+
+.
+|-- @types
+|   |-- Interfaces.ts
+|   `-- index.ts
+|-- assets
+|   |-- images
+|   `-- svg
+|-- compileOptions.json
+|-- package-lock.json
+|-- package.json
+|-- render.ts
+|-- routes.ts
+|-- src
+|   |-- constants
+|   |-- scss
+|   `-- templates
+|-- static
+`-- ts
+    |-- constants
+    |-- main.ts
+    |-- types
+    `-- util
+
+```
+
+**Adding Svelte to the project:**
+
+```bash
+npm create svelte@latest
+```
+
+Having done this, and having selected the corresponding options for what we want to do (add Svelte to the same folder), let's see what this command has added:
+
+```
+.
+|-- @types
+|   |-- Interfaces.ts
+|   `-- index.ts
+|-- README.md
+|-- assets
+|   |-- images
+|   `-- svg
+|-- compileOptions.json
+|-- package-lock.json
+|-- package.json
+|-- render.ts
+|-- routes.ts
+|-- src
+|   |-- app.d.ts
+|   |-- app.html
+|   |-- constants
+|   |-- routes
+|   |-- scss
+|   `-- templates
+|-- static
+|   `-- favicon.png
+|-- svelte.config.js
+|-- ts
+|   |-- constants
+|   |-- main.ts
+|   |-- types
+|   `-- util
+|-- tsconfig.json
+`-- vite.config.ts
+```
+
+Now we perform the corresponding installation of dependencies and check that everything is OK:
+
+```bash
+npm install && npm run dev
+```
+
+Now that everything is working, it's time to understand how we can make the project work the way it was configured before, we need to look at how Svelte handles routes so that it can work like the routing handler it had before with the ``routes.ts`` file in conjunction with ``render.ts``.
+
+Svelte handles routes with a file system based router in a particular and easy to understand way, all the routes in the page will be handled with folders and files with a particular name in case we want to have route handling with parameters or the route index, in that case, Svelte by default handles all this in the ``src/routes`` directory and each route index should be handled by a ``+page.svelte`` component. But first we must convert what we already had done into Svelte components, in my case, the reusable components I made using the pug mixis were two: ``project-item`` and ``timeline-item``.
+	
+```pug
+//-Mixins.pug
+	
+mixin projet-item(name, imageName, ...tags)
+  .poject-content
+    .target
+      .img-content
+        img( loading="lazy", src="/public/images/screenshots/"+imageName, alt="image")
+    a(href="/"+name): h3 #{name}
+    .tags-content.flex-content
+      each tag in tags
+        span.tag ##{tag}
+mixin timeline-item(position, formYear, toYear, description, company='Freelance')
+  .path-timeline-item
+    .path-timeline-header
+      span #{company}
+      span #{formYear}-#{toYear}
+    .path-timeline-info
+      h4 #{position}
+      p #{description}
+
+```
+
+Their conversions were as follows:
+
+```svelte
+<!-- TimelineItem.svelte -->
+	
+<script lang="ts">
+import type {TiemelineProps} from "@types";
+  export let data: TiemelineProps["data"];
+</script>
+
+<div class="timeline-item">
+  <div class="timeline-item__header">
+    <span class="timeline-item__header__span">{data.company}</span>
+    <span class="timeline-item__header__span">{data.formYear}-{data.toYear}</span>
+  </div>
+  <div class="timeline-item__info">
+    <h4 class="timeline-item__info__title">{data.position}</h4>
+    <p class="timeline-item__info__body">{data.description}</p>
+  </div>
+</div>
+
+
+<style lang="scss">
+  …
+</style>
+	
+```
+
+```svelte
+<!-- ProjectItem.Svelte -->
+	
+<script lang="ts">
+  import Tag from "./Tag.svelte";
+  export let name: string, imageName: string, imageUrl: string;
+  export let tags: string[];
+  
+</script>
+<div class="project">
+  <div class="project__target | target">
+    <div class="project__target__img-content">
+      <img loading="lazy" src={imageUrl} alt={imageName} />
+    </div>
+  </div>
+  <a href="/{name}">
+    <h3>{name}</h3>
+  </a>
+  <ul class="tags-content flex-content">
+    {#each tags as tag}
+      <li>
+        <Tag>{tag}</Tag>
+      </li>
+    {/each}
+  </ul>
+</div>
+
+<style lang="scss">
+  …
+</style>
+	
+```
+	
+### Problems during the process:
+	
+Despite how little research I did on Svelte before moving on to develop this implementation change, Svelte is pretty easy for me to use compared to other frameworks, the way it implements routing is easy to handle (even if I'm not entirely sold on it).
+	
+I've been looking for information as I've been trying things out and apart from understanding the difference between Svelte and Sveltekit, I've run into another unknown about the adapters.
+	
+I had a small problem with the Svelte static adapter, for some reason when I finished building the project, the output would get deleted but it didn't show any errors. Honestly I spent a whole day trying to fix this but I didn't find similar problems on Stackoverflow. The funny thing is that the next day everything fixed itself, yes, one of the three laws of computer science manifested itself, Restart the PC.
+	
+In conclusion, I thought I was facing a problem that would at least take me more time than necessary, but I got a good experience with Svelte, everything was quite smooth and natural.
+	
+### Finishing
+	
+Svelte is great, I really expected this change to take me at least a week (7 days completely) as it has happened to me before with Angular and React. I haven't had to dig a lot about how Svelte works to understand how I can do some things, compared to Angular in this aspect, the first time I used Angular it took me much more time because of this issue, I had to understand very well how the whole ecosystem worked to feel confident to start, although with Svelte I save this time, with Angular I learned that some things is better to let them pass underneath and not get frustrated by trying to understand everything at first, so it doesn't give that feeling that you haven't learned anything during the process.
+	
+### Conclusion:
+	
+**Use Svelte!**
+	
