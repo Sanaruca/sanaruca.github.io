@@ -1,0 +1,142 @@
+$primary-color: #ccff66;
+$primary-color-alpha-2: change-color(
+  $color: $primary-color,
+  $alpha: 0.2,
+);
+
+// darck colors
+$bg-color-1: #314249;
+$bg-color-2: #33454d;
+$bg-color-3: #394d56;
+$text-color: #c3dfe0;
+
+// light colors
+$bg-color-1-l: #ffffff;
+$bg-color-2-l: #f7f7f7;
+$bg-color-3-l: change-color(
+  $color: $primary-color,
+  $alpha: 0.08,
+);
+$text-color-l: #101010;
+
+:root {
+  --primary-color: #{$primary-color};
+  --primary-color-alpha-2: #{$primary-color-alpha-2};
+  --bg-color-1: #{$bg-color-1};
+  --bg-color-2: #{$bg-color-2};
+  --bg-color-3: #{$bg-color-3};
+  --text-color: #{$text-color};
+}
+
+@import "_reset.scss";
+@import "_util.scss";
+
+body {
+  font-size: 1.65rem;
+  background-color: var(--bg-color-2);
+  color: var(--text-color);
+  font-family: Calibri, Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: capitalize;
+}
+
+h1 {
+  font-size: 3.7rem;
+}
+h2 {
+  font-size: 3rem;
+}
+h3 {
+  font-size: 1.9rem;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+  font-weight: 400;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+
+  * {
+    display: inline-block;
+  }
+}
+
+
+p {
+  line-height: 2.5rem;
+}
+
+main > section,
+header, article,
+footer {
+  padding: 8rem 10rem;
+  @media screen and (max-width: 768px) {
+    padding: 8rem;
+  }
+  @media screen and (max-width: 480px) {
+    padding: 8rem 3rem;
+  }
+}
+
+footer {
+  .grid-content {
+    grid-column: repeat(5, 1fr);
+  }
+}
+
+// TODO: modulate
+section,
+.title-content {
+
+  span {
+    display: inline-block;
+    font-size: 1.1em;
+    color: var(--primary-color);
+  }
+  h1,
+  h2,
+  h3 {
+    margin-top: 0.5em;
+  }
+  p {
+    margin-top: 2em;
+  }
+
+  &.flex-content {
+    // justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 6rem;
+
+    * {
+      flex: 1;
+    }
+
+    &:first-of-type {
+      // justify-content: space-between;
+    }
+  }
+
+  .grid-content {
+    margin-top: 2rem;
+  }
+}
