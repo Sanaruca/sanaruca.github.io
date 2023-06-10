@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/images/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    
+		<link href="../_app/immutable/assets/0.7e7a66a8.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/2.8627d47a.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/5.cab70bcd.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.8372fe02.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.e5565f93.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.b89fd9fd.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/control.f5b05b5f.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.cd2e9336.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper.41c905a7.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.97729167.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/2.4e57a2ca.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/5.3d65f4b2.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.93323930.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.0d6b3187.js"><title>How I added Svelte to my website | Sanaruca</title><!-- HEAD_svelte-1b586d5_START --><!-- HEAD_svelte-1b586d5_END -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+    </style>
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">
+
+
+<nav class="navigation-bar | flex-content black-target fixed svelte-r7tesf"><input id="auxcheck" type="checkbox" name="auxcheck" class="svelte-r7tesf"><a class="pagename svelte-r7tesf" href="/">sanaruca</a>
+  <label for="auxcheck" class="svelte-r7tesf"><i class="burger svelte-r7tesf"></i></label>
+  <div class="nav-links-content flex-content svelte-r7tesf"><ul class="flex-content svelte-r7tesf"><li><a href="/#about-me" class="svelte-r7tesf">about</a></li>
+      <li><a href="/#services" class="svelte-r7tesf">services</a></li>
+      <li><a href="/#info" class="svelte-r7tesf">skills</a></li>
+      <li><a href="/#portfolio" class="svelte-r7tesf">portfolio</a></li>
+      <li><a href="/blog" class="svelte-r7tesf">blog</a></li></ul>
+    <ul class="flex-content svelte-r7tesf"><li><a target="_blank" href="https://github.com/sanaruca" class="svelte-r7tesf">github</a></li>
+      <li><a target="_blank" href="https://www.linkedin.com/in/sanaruca" class="svelte-r7tesf">linkedin</a></li>
+      <li><a target="_blank" href="https://www.instagram.com/sanaruca" class="svelte-r7tesf">instagram</a></li>
+      <li><a target="_blank" href="https://www.upwork.com/freelancers/~01d39462acbe29942b" class="svelte-r7tesf">upwork</a></li></ul></div>
+</nav>
+
+<main><article class="post svelte-14zyw0x">
+
+<div class="md svelte-1rflgz5"><h1>How I added Svelte to my website</h1>
+<blockquote><p><strong>Note:</strong> This article is expected to be updated in the near future, so it may be incomplete.</p></blockquote>
+<p>During the last few months I have been exploring JavaScript technologies like <a href="https://nx.dev/" rel="nofollow">nx</a>, <a href="https://vitejs.dev/" rel="nofollow">vite.js</a>, <a href="https://storybook.js.org/" rel="nofollow">storybook</a>, etc. In this time I have discovered a lot of things but in this article I will be talking about how I changed the implementation of my website, how I went from having a website developed with technologies like <a href="https://pugjs.org/api/getting-started.html#overview" rel="nofollow">pug/jade</a> to a more scalable website with <a href="https://kit.svelte.dev/docs/introduction" rel="nofollow">Svelte</a>.</p>
+<h3>Context</h3>
+<p>When I decided to create my website I clearly didn’t know where to start, although I knew how to develop it, I didn’t want to add a framework like <a href="https://angular.io/guide/what-is-angular" rel="nofollow">Angular</a> as it would be like driving a truck to the supermarket so I chose to make a static website with HTML and CSS and just a bit of Javascipt to make the contact form instead of using the <strong>mailto</strong> link because if you access this link from a computer (or at least it happened to me) it tended to not work because of mail applications etc.</p>
+<p>The thing is that in addition to this decision, I wanted to be able to reuse components of the page without having to copy and paste after all. This reason made me choose to use pug/jade instead of pure HTML. </p>
+<p>Pug/jade seems great as a template engine although I didn’t really need more than static applications with <strong>Server Side Rendering</strong>, the syntax with idents and not having to write a tag twice (opening and closing) gave me the advantage of not having a very long code and easy to read.</p>
+<p>My idea was to develop the website as soon as possible so I used <a href="https://prepros.io/" rel="nofollow">Prepros</a> to convert the “.pug” and “.scss” files to HTML and CSS respectively. This brought me two problems, although the processing was fast I didn’t have the flexibility to export the outputs to specific folders in an order that made sense to me depending on how I structured the project at the folder level, so I had to manually move the files and I didn’t like having the notification to buy prepros every 10 minutes.</p>
+<p>For these reasons I decided to create my own environment as a <strong>mini framework</strong> (I later realised that this was not efficient).</p>
+<p>Once I finished all the development of the site it wasn’t until I had to add and fix a few things that I realised that the development process I had put in place was inefficient as I used a script to watch for changes to each file, concurrently processed each of those files for output and copied some files I added as long as they weren’t already there. This could take about 3 seconds, which is a lot and ruined the development experience.</p>
+<h3>Process</h3>
+<p>Before we start with this, I think it’s useful to give a short description of what Svelte is and what advantages it brings:</p>
+<p>Svelte is described on its homepage as <strong><em>“a radically new approach to creating user interfaces ”</em></strong>. It is a JavaScript framework that differs from other frameworks in the way it works with the DOM. Unlike other frameworks that make updates to the DOM every time there is a change, Svelte compiles the code at compile time and produces JavaScript code that manipulates the DOM directly, which means that the load and speed of the application benefits.</p>
+<p><strong>The advantages of Svelte include</strong>:</p>
+<ol><li>Improves the speed of the application.</li>
+<li>Simpler, clearer and easier to read code.</li>
+<li>Faster page loading.</li>
+<li>May be easier to learn compared to other frameworks.</li>
+<li>Makes it easier to create applications with fewer dependencies.</li>
+<li>Better performance compared to other frameworks such as React or Angular.</li></ol>
+<p>Overall, Svelte is a useful tool if you want to create fast and efficient web applications.</p>
+<p>Once you understand why Svelte, start by going to the official Svelte website and following the guide. Simply to avoid having to copy files, run the command to generate a Svelte project so that it will be in the same folder as the page code.</p>
+<p><strong>Original Project Structure</strong></p>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined">
+.
+|-- @types
+|   |-- Interfaces.ts
+|   &#96;-- index.ts
+|-- assets
+|   |-- images
+|   &#96;-- svg
+|-- compileOptions.json
+|-- package-lock.json
+|-- package.json
+|-- render.ts
+|-- routes.ts
+|-- src
+|   |-- constants
+|   |-- scss
+|   &#96;-- templates
+|-- static
+&#96;-- ts
+    |-- constants
+    |-- main.ts
+    |-- types
+    &#96;-- util
+</code><!-- HTML_TAG_END --></pre>
+<p><strong>Adding Svelte to the project:</strong></p>
+<pre class="language-bash"><!-- HTML_TAG_START --><code class="language-bash"><span class="token function">npm</span> create svelte@latest</code><!-- HTML_TAG_END --></pre>
+<p>Having done this, and having selected the corresponding options for what we want to do (add Svelte to the same folder), let’s see what this command has added:</p>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined">.
+|-- @types
+|   |-- Interfaces.ts
+|   &#96;-- index.ts
+|-- README.md
+|-- assets
+|   |-- images
+|   &#96;-- svg
+|-- compileOptions.json
+|-- package-lock.json
+|-- package.json
+|-- render.ts
+|-- routes.ts
+|-- src
+|   |-- app.d.ts
+|   |-- app.html
+|   |-- constants
+|   |-- routes
+|   |-- scss
+|   &#96;-- templates
+|-- static
+|   &#96;-- favicon.png
+|-- svelte.config.js
+|-- ts
+|   |-- constants
+|   |-- main.ts
+|   |-- types
+|   &#96;-- util
+|-- tsconfig.json
+&#96;-- vite.config.ts</code><!-- HTML_TAG_END --></pre>
+<p>Now we perform the corresponding installation of dependencies and check that everything is OK:</p>
+<pre class="language-bash"><!-- HTML_TAG_START --><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token operator">&amp;&amp;</span> <span class="token function">npm</span> run dev</code><!-- HTML_TAG_END --></pre>
+<p>Now that everything is working, it’s time to understand how we can make the project work the way it was configured before, we need to look at how Svelte handles routes so that it can work like the routing handler it had before with the <code>routes.ts</code> file in conjunction with <code>render.ts</code>.</p>
+<p>Svelte handles routes with a file system based router in a particular and easy to understand way, all the routes in the page will be handled with folders and files with a particular name in case we want to have route handling with parameters or the route index, in that case, Svelte by default handles all this in the <code>src/routes</code> directory and each route index should be handled by a <code>+page.svelte</code> component. But first we must convert what we already had done into Svelte components, in my case, the reusable components I made using the pug mixis were two: <code>project-item</code> and <code>timeline-item</code>.</p>
+<pre class="language-pug"><!-- HTML_TAG_START --><code class="language-pug"><span class="token comment">//-Mixins.pug</span>
+	
+<span class="token mixin"><span class="token keyword">mixin</span> projet-<span class="token function">item</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> imageName<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>tags<span class="token punctuation">)</span></span>
+  <span class="token tag"><span class="token attr-class">.poject-content</span></span>
+    <span class="token tag"><span class="token attr-class">.target</span></span>
+      <span class="token tag"><span class="token attr-class">.img-content</span></span>
+        <span class="token tag">img<span class="token attributes"><span class="token punctuation">(</span> <span class="token attr-name">loading</span><span class="token punctuation">=</span><span class="token attr-value"><span class="token string">"lazy"</span></span><span class="token punctuation">,</span> <span class="token attr-name">src</span><span class="token punctuation">=</span><span class="token attr-value"><span class="token string">"/public/images/screenshots/"</span><span class="token operator">+</span>imageName</span><span class="token punctuation">,</span> <span class="token attr-name">alt</span><span class="token punctuation">=</span><span class="token attr-value"><span class="token string">"image"</span></span><span class="token punctuation">)</span></span></span>
+    <span class="token tag">a<span class="token attributes"><span class="token punctuation">(</span><span class="token attr-name">href</span><span class="token punctuation">=</span><span class="token attr-value"><span class="token string">"/"</span><span class="token operator">+</span>name</span><span class="token punctuation">)</span></span><span class="token punctuation">:</span></span> <span class="token tag">h3</span> #&#123;name&#125;
+    <span class="token tag"><span class="token attr-class">.tags-content</span><span class="token attr-class">.flex-content</span></span>
+      <span class="token flow-control"><span class="token each"><span class="token keyword">each</span> tag <span class="token keyword">in</span></span> tags</span>
+        <span class="token tag">span<span class="token attr-class">.tag</span></span> <span class="token plain-text">##&#123;tag&#125;</span>
+<span class="token mixin"><span class="token keyword">mixin</span> timeline-<span class="token function">item</span><span class="token punctuation">(</span>position<span class="token punctuation">,</span> formYear<span class="token punctuation">,</span> toYear<span class="token punctuation">,</span> description<span class="token punctuation">,</span> company='Freelance'<span class="token punctuation">)</span></span>
+  <span class="token tag"><span class="token attr-class">.path-timeline-item</span></span>
+    <span class="token tag"><span class="token attr-class">.path-timeline-header</span></span>
+      <span class="token tag">span</span> <span class="token plain-text">#&#123;company&#125;</span>
+      <span class="token tag">span</span> <span class="token plain-text">#&#123;formYear&#125;-#&#123;toYear&#125;</span>
+    <span class="token tag"><span class="token attr-class">.path-timeline-info</span></span>
+      <span class="token tag">h4</span> <span class="token plain-text">#&#123;position&#125;</span>
+      <span class="token tag">p</span> <span class="token plain-text">#&#123;description&#125;</span>
+</code><!-- HTML_TAG_END --></pre>
+<p>Their conversions were as follows:</p>
+<pre class="language-svelte"><!-- HTML_TAG_START --><code class="language-svelte"><span class="token comment">&lt;!-- TimelineItem.svelte --></span>
+	
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ts<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">import</span> type <span class="token punctuation">&#123;</span>TiemelineProps<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">"@types"</span><span class="token punctuation">;</span>
+  <span class="token keyword">export</span> <span class="token keyword">let</span> <span class="token literal-property property">data</span><span class="token operator">:</span> TiemelineProps<span class="token punctuation">[</span><span class="token string">"data"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timeline-item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timeline-item__header<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timeline-item__header__span<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token language-javascript"><span class="token punctuation">&#123;</span>data<span class="token punctuation">.</span>company<span class="token punctuation">&#125;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timeline-item__header__span<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token language-javascript"><span class="token punctuation">&#123;</span>data<span class="token punctuation">.</span>formYear<span class="token punctuation">&#125;</span></span>-<span class="token language-javascript"><span class="token punctuation">&#123;</span>data<span class="token punctuation">.</span>toYear<span class="token punctuation">&#125;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timeline-item__info<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h4</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timeline-item__info__title<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token language-javascript"><span class="token punctuation">&#123;</span>data<span class="token punctuation">.</span>position<span class="token punctuation">&#125;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h4</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timeline-item__info__body<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token language-javascript"><span class="token punctuation">&#123;</span>data<span class="token punctuation">.</span>description<span class="token punctuation">&#125;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>scss<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+  …
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+	</code><!-- HTML_TAG_END --></pre>
+<pre class="language-svelte"><!-- HTML_TAG_START --><code class="language-svelte"><span class="token comment">&lt;!-- ProjectItem.Svelte --></span>
+	
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ts<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+  <span class="token keyword">import</span> Tag <span class="token keyword">from</span> <span class="token string">"./Tag.svelte"</span><span class="token punctuation">;</span>
+  <span class="token keyword">export</span> <span class="token keyword">let</span> <span class="token literal-property property">name</span><span class="token operator">:</span> string<span class="token punctuation">,</span> <span class="token literal-property property">imageName</span><span class="token operator">:</span> string<span class="token punctuation">,</span> <span class="token literal-property property">imageUrl</span><span class="token operator">:</span> string<span class="token punctuation">;</span>
+  <span class="token keyword">export</span> <span class="token keyword">let</span> <span class="token literal-property property">tags</span><span class="token operator">:</span> string<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>project<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>project__target | target<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>project__target__img-content<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">loading</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lazy<span class="token punctuation">"</span></span> <span class="token attr-name">src=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>imageUrl<span class="token punctuation">&#125;</span></span> <span class="token attr-name">alt=</span><span class="token language-javascript"><span class="token punctuation">&#123;</span>imageName<span class="token punctuation">&#125;</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href="</span>/<span class="token language-javascript"><span class="token punctuation">&#123;</span>name<span class="token punctuation">&#125;</span></span><span class="token attr-name">"</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span><span class="token language-javascript"><span class="token punctuation">&#123;</span>name<span class="token punctuation">&#125;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>tags-content flex-content<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token each"><span class="token punctuation">&#123;</span><span class="token keyword">#each</span> <span class="token language-javascript">tags </span><span class="token keyword">as</span> <span class="token language-javascript">tag<span class="token punctuation">&#125;</span></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Tag</span><span class="token punctuation">></span></span><span class="token language-javascript"><span class="token punctuation">&#123;</span>tag<span class="token punctuation">&#125;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Tag</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+    <span class="token each"><span class="token punctuation">&#123;</span><span class="token keyword">/each</span><span class="token punctuation">&#125;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>scss<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+  …
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+	</code><!-- HTML_TAG_END --></pre>
+<h3>Problems during the process:</h3>
+<p>Despite how little research I did on Svelte before moving on to develop this implementation change, Svelte is pretty easy for me to use compared to other frameworks, the way it implements routing is easy to handle (even if I’m not entirely sold on it).</p>
+<p>I’ve been looking for information as I’ve been trying things out and apart from understanding the difference between Svelte and Sveltekit, I’ve run into another unknown about the adapters.</p>
+<p>I had a small problem with the Svelte static adapter, for some reason when I finished building the project, the output would get deleted but it didn’t show any errors. Honestly I spent a whole day trying to fix this but I didn’t find similar problems on Stackoverflow. The funny thing is that the next day everything fixed itself, yes, one of the three laws of computer science manifested itself, Restart the PC.</p>
+<p>In conclusion, I thought I was facing a problem that would at least take me more time than necessary, but I got a good experience with Svelte, everything was quite smooth and natural.</p>
+<h3>Finishing</h3>
+<p>Svelte is great, I really expected this change to take me at least a week (7 days completely) as it has happened to me before with Angular and React. I haven’t had to dig a lot about how Svelte works to understand how I can do some things, compared to Angular in this aspect, the first time I used Angular it took me much more time because of this issue, I had to understand very well how the whole ecosystem worked to feel confident to start, although with Svelte I save this time, with Angular I learned that some things is better to let them pass underneath and not get frustrated by trying to understand everything at first, so it doesn’t give that feeling that you haven’t learned anything during the process.</p>
+<h3>Conclusion:</h3>
+<p><strong>Use Svelte!</strong></p>
+</div>
+
+</article></main>
+
+
+			
+			<script>
+				{
+					__sveltekit_47u7g9 = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null,null];
+
+					Promise.all([
+						import("../_app/immutable/entry/start.8372fe02.js"),
+						import("../_app/immutable/entry/app.cd2e9336.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2, 5],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+  </body>
+</html>
